@@ -1,0 +1,96 @@
+﻿@model IEnumerable<AM.ApplicationCore.Domain.Flight>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index">
+    Search by Flight Date :
+    <input type="date" name="flightDate" />
+    <input type="submit" value="Serach" />
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<p>
+    <a asp-action="Index" asp-controller="Plane">Liste des avions</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Departure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EffectiveArrival)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaneId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plane.PlaneType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pilot)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EffectiveArrival)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimatedDuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaneId)
+            </td>
+            <td>
+                @if(item.Plane != null)
+                {
+                    <a asp-action="Details" asp-controller="Plane" asp-route-id="@item.Plane.PlaneId">@item.Plane.PlaneType</a>
+                }
+            </td>
+            <td>
+                <img src="@Url.Content("~/upload/" + item.Pilot)"                
+                  style="display:@(string.IsNullOrEmpty(item.Pilot) ? "none": null)" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.FlightId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.FlightId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.FlightId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
